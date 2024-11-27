@@ -47,7 +47,7 @@ if __name__=='__main__':
 
     if not args.command:
         parser.print_help() 
-        
+
     elif args.command == 'create_folders': 
         os.makedirs('input', exist_ok=True) 
         os.makedirs('output', exist_ok=True) 
@@ -56,3 +56,4 @@ if __name__=='__main__':
     elif args.command == 'process_images': 
         remover = BackgroundRemover()
         remover.process_images()
+        print('images proccessed successfuly')
