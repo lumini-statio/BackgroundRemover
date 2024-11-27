@@ -1,10 +1,11 @@
 import os
+import argparse
 from datetime import datetime
 from rembg import remove
 
 
 class BackgroundRemover:
-    def __init__(self, input_folder, output_folder):
+    def __init__(self, input_folder='input', output_folder='output'):
         self.input_folder = input_folder
         self.output_folder = output_folder
 
@@ -36,8 +37,22 @@ class BackgroundRemover:
 
 
 if __name__=='__main__':
-    input_folder = 'input'
-    output_folder = 'output'
+    parser = argparse.ArgumentParser(description="Script para remover fondo de imágenes")
+    subparsers = parser.add_subparsers(dest='command', help='Subcomandos')
 
-    remover = BackgroundRemover(input_folder, output_folder)
-    remover.process_images()
+    parser_create = subparsers.add_parser('create_folders', help='Create folders for input and output')
+    parser_process = subparsers.add_parser('process_images', help='Process images and remove the background')
+
+    args = parser.parse_args() 
+
+    if not args.command:
+        parser.print_help() 
+        
+    elif args.command == 'create_folders': 
+        os.makedirs('input', exist_ok=True) 
+        os.makedirs('output', exist_ok=True) 
+        print("Folders 'input' and 'output' where created succesfuly") 
+
+    elif args.command == 'process_images': 
+        remover = BackgroundRemover()
+        remover.process_images()
